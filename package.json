@@ -26,14 +26,13 @@
     "build:watch": "tsc -w -p tsconfig.release.json",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "run": "node build/src/app.js",
+    "run:watch": "nodemon build/src/app.js"
   },
   "author": "dph",
   "license": "Apache-2.0",
   "dependencies": {
-    "@types/body-parser": "^1.19.0",
-    "@types/express": "^4.17.7",
-    "@types/mongoose": "^5.7.30",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.22",

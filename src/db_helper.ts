@@ -17,7 +17,7 @@ export class DBHelper {
             
         })
         .then(result => {
-            console.log('connect db success: ');
+            console.log('connect db success: ', result);
         })
         .catch(err => {
             console.log('connect failed: ', err);
@@ -37,3 +37,4 @@ export class DBHelper {
         return WarehouseInfoModel.findByIdAndUpdate(id,data);
     }
 };
+

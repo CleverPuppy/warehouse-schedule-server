@@ -5,16 +5,9 @@ import express = require('express');
 
 const app: express.Express = express();
 app.use(express.json());
+// app.use(express.static('/static/'));
+
 const db = new DBHelper();
-
-// db.getWarehouseInfoById("5f048a2d1ceeba1b36047fbc")
-//     .then(value => {
-//         console.log("query success : ", value);
-//     })
-//     .catch(err => {
-//         console.log("query failed : err: ", err);
-//     })
-
 // get by id
 app.get('/warehouseinfo/id/:id', (req, res) => {
     db.getWarehouseInfoById(req.params.id)
@@ -28,9 +21,11 @@ app.get('/warehouseinfo/id/:id', (req, res) => {
 app.post('/warehouseinfo/', (req, res) => {
     console.log(req.params);
     db.addWarehouseInfo(req.body)
-        .then(value => res.json(value))
+        .then(value => {
+            console.log("addWarehouseInfo success");
+            res.json(value)})
         .catch(err=>{
-            console.log(err);
+            console.log("addWarehouseInfo failed, err: ", err);
             res.sendStatus(403);
         })
 })
@@ -50,14 +45,20 @@ app.post('/warehouseinfo/id/:id', (req, res) => {
 // delete
 app.delete('/warehouseinfo/id/:id', (req, res) => {
     db.deleteWarehouseInfoById(req.params.id)
-        .then(value => res.sendStatus(200))
-        .catch(err => res.sendStatus(403));
+        .then(value => {
+            console.log(value);
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            console.error(err);
+            res.sendStatus(403);
+        });
 })
 
 
 app.get('/', (req, res) => {
     console.log(req);
-    res.send('Hello world');
+    res.sendFile('/static/index.html');
 });
 
 app.listen(systemConfig.port, function () {
