@@ -55,6 +55,33 @@ app.delete('/warehouseinfo/id/:id', (req, res) => {
         });
 })
 
+app.post('/auth/signin/',(req, res) =>{
+    db.retrieveUserInfo(req.body.user_name, req.body.user_pwd)
+        .then(value =>{
+            console.log(value);
+            if(value.length != 0){
+                res.json({"user_id":value[0]._id});
+            }else{
+                res.sendStatus(403);
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(403);
+        })
+})
+
+app.post('/auth/signup/',(req, res) =>{
+    db.createUserInfo(req.body)
+        .then(value => {
+            console.log(value);
+            res.sendStatus(200);
+        })
+        .catch(err=>{
+            console.log(err);
+            res.sendStatus(403);
+        })
+})
 
 app.get('/', (req, res) => {
     console.log(req);

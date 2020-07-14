@@ -1,4 +1,5 @@
 import {iWarehouseInfo, WarehouseInfoModel} from './db_warehouseinfo';
+import {iUserInfo, UserInfoModel} from './db_userinfo';
 import {systemConfig} from './config/sysconfig';
 import { Query } from 'mongoose';
 const mongoose = require('mongoose');
@@ -36,5 +37,19 @@ export class DBHelper {
     updateWarehouseInfoById(id: string, data:iWarehouseInfo): Query<any>{
         return WarehouseInfoModel.findByIdAndUpdate(id,data);
     }
+
+    createUserInfo(data: iUserInfo) : Promise<any> {
+        return UserInfoModel.create(data);
+    }
+
+    retrieveUserInfo(user_name : string , user_pwd: string) : Query<any>{
+        return UserInfoModel.find({user_name:user_name,user_pwd:user_pwd});
+    }
+
+    checkUserNameValidation(user_name : string) : Query<any> {
+        return UserInfoModel.find({user_name:user_name});
+    }
+
+
 };
 
