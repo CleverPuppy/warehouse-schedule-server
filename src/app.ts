@@ -17,8 +17,21 @@ app.get('/warehouseinfo/id/:id', (req, res) => {
             res.sendStatus(403);
         });
 })
+
+app.get('/warehouseinfo/userid/:user_id',(req, res) =>{
+    db.getWarehouseInfoByUserId(req.params.user_id)
+        .then(value  => {
+            console.log('getWarehouseInfoByUserID ', req.params.user_id);
+            res.json(value);
+        })
+        .catch(err => {
+            console.log('getWarehouseInfoByUserId error', err);
+            res.sendStatus(500);
+        })
+})
+
 // create
-app.post('/warehouseinfo/', (req, res) => {
+app.post('/warehouseinfo/create', (req, res) => {
     console.log(req.params);
     db.addWarehouseInfo(req.body)
         .then(value => {

@@ -1,7 +1,7 @@
 import {iWarehouseInfo, WarehouseInfoModel} from './db_warehouseinfo';
 import {iUserInfo, UserInfoModel} from './db_userinfo';
 import {systemConfig} from './config/sysconfig';
-import { Query } from 'mongoose';
+import { Query,Types } from 'mongoose';
 const mongoose = require('mongoose');
 
 const DB_URL : string = [systemConfig.mongodb_host,systemConfig.mongodb_port].join(':');
@@ -31,6 +31,11 @@ export class DBHelper {
     getWarehouseInfoById(id: string) : Query<any> {
         return WarehouseInfoModel.findById(id);
     }
+
+    getWarehouseInfoByUserId(id: string) : Query<any>{
+        return WarehouseInfoModel.find({user_id: Types.ObjectId(id)});
+    }
+
     deleteWarehouseInfoById(id: string) : Query<any>{
         return WarehouseInfoModel.findByIdAndDelete(id);
     }
